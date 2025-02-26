@@ -57,7 +57,7 @@ model Order {
   id                Int                    @id @default(autoincrement())
   total             Float
   status            OrderStatus
-  consumptionMethod OrderConsumptionMethod
+  consumptionMethod ConsumptionMethod
   restaurantId      String
   restaurant        Restaurant             @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   orderProducts     OrderProduct[]
@@ -86,7 +86,7 @@ enum OrderStatus {
   FINISH
 }
 
-enum OrderConsumptionMethod {
+enum ConsumptionMethod {
   DELIVERY
   TAKEAWAY
   DINE_IN

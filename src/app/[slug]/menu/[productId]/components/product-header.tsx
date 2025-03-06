@@ -18,6 +18,7 @@ const ProductHeader = ({ product }: ProductHeaderProps) => {
 
 
    return (
+
       <div className="relative h-[280px] w-full">
          <Button
             variant="secondary"

@@ -10,8 +10,8 @@ interface CartItemProps {
    product: CartProduct;
 };
 const CartProductItem = ({ product }: CartItemProps) => {
-   const {decreaseProductQuantity, increaseProductQuantity} = useContext(CartContext);
-   
+   const { decreaseProductQuantity, increaseProductQuantity, removeProduct } = useContext(CartContext);
+
    return (
       <div className="flex items-center justify-between">
          {/* Imagem do produto - esquerda*/}
@@ -24,26 +24,29 @@ const CartProductItem = ({ product }: CartItemProps) => {
                <p className="text-sm font-semibold">{FormatCurrency(product.price)}</p>
                {/* Quantidade*/}
                <div className="flex items-center gap-1">
-                  <Button 
-                  className="h-7 w-7 rounded-lg" 
-                  variant="outline" 
-                  onClick={() => decreaseProductQuantity(product.id)}>
+                  <Button
+                     className="h-7 w-7 rounded-lg"
+                     variant="outline"
+                     onClick={() => decreaseProductQuantity(product.id)}>
                      <ChevronLeftIcon />
                   </Button>
 
-                  <p className="ml-2 w-5 text-xs">{product.quantity}</p> 
+                  <p className="ml-2 w-5 text-xs">{product.quantity}</p>
 
-                  <Button 
-                  className="h-7 w-7 rounded-lg" 
-                  variant="destructive"
-                  onClick={() => increaseProductQuantity(product.id)}>
+                  <Button
+                     className="h-7 w-7 rounded-lg"
+                     variant="destructive"
+                     onClick={() => increaseProductQuantity(product.id)}>
                      <ChevronRightIcon />
                   </Button>
                </div>
             </div>
          </div>
          {/* lixeira - direita*/}
-         <Button className="w-7 h-7 rounded-lg" variant="outline">
+         <Button
+            className="w-7 h-7 rounded-lg"
+            variant="outline"
+            onClick={() => removeProduct(product.id)}>
             <TrashIcon />
          </Button>
       </div>

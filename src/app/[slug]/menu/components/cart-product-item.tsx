@@ -10,9 +10,8 @@ interface CartItemProps {
    product: CartProduct;
 };
 const CartProductItem = ({ product }: CartItemProps) => {
-   const {decreaseProductQuantity} = useContext(CartContext);
-   const {increaseProductQuantity} = useContext(CartContext);
-
+   const {decreaseProductQuantity, increaseProductQuantity} = useContext(CartContext);
+   
    return (
       <div className="flex items-center justify-between">
          {/* Imagem do produto - esquerda*/}

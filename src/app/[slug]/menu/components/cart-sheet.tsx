@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { CartContext } from "../contexts/cart";
 
 const CartSheet = () => {
-   const { isOpen, toggleCart } = useContext(CartContext);
+   const { isOpen, toggleCart, products } = useContext(CartContext);
    return (
       <Sheet open={isOpen} onOpenChange={toggleCart}>
          <SheetContent>
@@ -14,6 +14,11 @@ const CartSheet = () => {
                   Essa ação não pode ser desfeita.
                </SheetDescription>
             </SheetHeader>
+            {products.map(product => (
+               <h1 key={product.id}>
+                  {product.name} - {product.quantity}
+               </h1>
+            ))}
          </SheetContent>
 
       </Sheet>

@@ -12,6 +12,7 @@ export interface ICartContext {
    isOpen: boolean;
    products: CartProduct[];
    toggleCart: () => void;
+   total: number;
    addProduct: (product: CartProduct) => void;
    decreaseProductQuantity: (productId: string) => void;
    increaseProductQuantity: (productId: string) => void;
@@ -22,6 +23,7 @@ export interface ICartContext {
 export const CartContext = createContext<ICartContext>({
    isOpen: false,
    products: [],
+   total: 0,
    toggleCart: () => { },
    addProduct: () => { },  // Add product to the cart (not implemented)
    decreaseProductQuantity: () => { },
@@ -32,6 +34,12 @@ export const CartContext = createContext<ICartContext>({
 export const CartProvider = ({ children }: { children: ReactNode }) => {
    const [products, setProducts] = useState<CartProduct[]>([]);
    const [isOpen, setIsOpen] = useState<boolean>(false);
+
+   const total = products.reduce((acc, product) => {
+      return (
+         acc + (product.quantity * product.price)
+      )
+   } , 0)
 
    const toggleCart = () => {
       setIsOpen(prev => !prev)
@@ -54,13 +62,13 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
    };
 
    const decreaseProductQuantity = (productId: string) => {
-      setProducts((prev) => prev.map(p => p.quantity > 1? {...p, quantity: p.quantity - 1 } : p));
+      setProducts((prev) => prev.map(p => p.quantity > 1 ? { ...p, quantity: p.quantity - 1 } : p));
    };
    const increaseProductQuantity = (productId: string) => {
-      setProducts((prev) => prev.map(p => ({...p, quantity: p.quantity + 1 })));
+      setProducts((prev) => prev.map(p => ({ ...p, quantity: p.quantity + 1 })));
    };
    const removeProduct = (productId: string) => {
-      setProducts((prev) => prev.filter(p => p.id!== productId));
+      setProducts((prev) => prev.filter(p => p.id !== productId));
    };
 
 
@@ -69,6 +77,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
          value={{
             isOpen,
             products,
+            total,
             toggleCart,
             addProduct,
             decreaseProductQuantity,

@@ -84,70 +84,70 @@ const FinishOrderButton = () => {
                <DrawerDescription>Insira suas informações abaixo para finalizar pedido</DrawerDescription>
             </DrawerHeader>
 
-            <div className="p-5">
-               <FormProvider {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                     {/* Nome */}
-                     <FormField
-                        control={form.control}
-                        name="nome"
-                        render={({ field }) => (
-                           <FormItem>
-                              <FormLabel>Seu nome</FormLabel>
-                              <FormControl>
-                                 <Input placeholder="Digite seu nome..." {...field} className="rounded-full" />
-                              </FormControl>
-                              <FormMessage />
-                           </FormItem>
-                        )}
-                     />
 
-                     {/* CPF */}
-                     <FormField
-                        control={form.control}
-                        name="cpf"
-                        render={({ field }) => (
-                           <FormItem>
-                              <FormLabel>Seu CPF</FormLabel>
-                              <FormControl>
-                                 <PatternFormat
-                                    placeholder="Digite seu CPF..."
-                                    format="###.###.###-##"
-                                    customInput={Input}
-                                    {...field}
-                                    className="rounded-full"
-                                 />
-                              </FormControl>
-                              <FormMessage />
-                           </FormItem>
-                        )}
-                     />
+            <FormProvider {...form}>
+               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                  {/* Nome */}
+                  <FormField
+                     control={form.control}
+                     name="nome"
+                     render={({ field }) => (
+                        <FormItem>
+                           <FormLabel>Seu nome</FormLabel>
+                           <FormControl>
+                              <Input placeholder="Digite seu nome..." {...field} className="rounded-full" />
+                           </FormControl>
+                           <FormMessage />
+                        </FormItem>
+                     )}
+                  />
 
-                     <DrawerFooter>
-                        <Button
-                           type="submit"
-                           variant="destructive"
-                           className="rounded-full"
-                           disabled={isPending}
-                        >
-                           {isPending && <Loader2Icon className="animate-spin" />}
-                           Finalizar
-                        </Button>
+                  {/* CPF */}
+                  <FormField
+                     control={form.control}
+                     name="cpf"
+                     render={({ field }) => (
+                        <FormItem>
+                           <FormLabel>Seu CPF</FormLabel>
+                           <FormControl>
+                              <PatternFormat
+                                 placeholder="Digite seu CPF..."
+                                 format="###.###.###-##"
+                                 customInput={Input}
+                                 {...field}
+                                 className="rounded-full"
+                              />
+                           </FormControl>
+                           <FormMessage />
+                        </FormItem>
+                     )}
+                  />
 
-                        <Button
-                           variant="outline"
-                           className="rounded-full"
-                           onClick={() => {
-                              setIsOpen(false);
-                              form.reset();
-                           }}
-                        >
-                           Cancelar
-                        </Button>
-                     </DrawerFooter>
-                  </form>
-               </FormProvider>
-            </div>
+                  <DrawerFooter>
+                     <Button
+                        type="submit"
+                        variant="destructive"
+                        className="rounded-full"
+                        disabled={isPending}
+                     >
+                        {isPending && <Loader2Icon className="animate-spin" />}
+                        Finalizar
+                     </Button>
+
+                     <Button
+                        variant="outline"
+                        className="rounded-full"
+                        onClick={() => {
+                           setIsOpen(false);
+                           form.reset();
+                        }}
+                     >
+                        Cancelar
+                     </Button>
+                  </DrawerFooter>
+               </form>
+            </FormProvider>
+
          </DrawerContent>
       </Drawer>
    );

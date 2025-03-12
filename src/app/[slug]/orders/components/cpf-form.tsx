@@ -1,24 +1,22 @@
 "use client"
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { usePathname, useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { PatternFormat } from "react-number-format";
+import { z } from "zod";
+
+import { Button } from "@/components/ui/button";
 import {
    Drawer,
-   DrawerContent,
    DrawerClose,
+   DrawerContent,
+   DrawerDescription,
    DrawerFooter,
    DrawerHeader,
-   DrawerTrigger,
    DrawerTitle,
-   DrawerDescription,
+   DrawerTrigger,
 } from "@/components/ui/drawer";
-
-import { Input } from "@/components/ui/input"
-import { z } from "zod";
-import { isValidCpf, removeCpfPontuation } from "../../menu/helpers/validate-cpf";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@/components/ui/button";
-import { PatternFormat } from "react-number-format";
-import { usePathname, useRouter } from "next/navigation"
-
 import {
    Form,
    FormControl,
@@ -26,7 +24,12 @@ import {
    FormItem,
    FormLabel,
    FormMessage,
-} from "@/components/ui/form"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+
+import { isValidCpf, removeCpfPontuation } from "../../menu/helpers/validate-cpf";
+
+
 
 
 

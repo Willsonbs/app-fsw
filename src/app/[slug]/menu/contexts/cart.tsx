@@ -1,7 +1,7 @@
 "use client"
 
 import { Product } from "@prisma/client";
-import { ReactNode, createContext, useState } from "react";
+import { createContext, ReactNode, useState } from "react";
 
 export interface CartProduct
    extends Pick<Product, "id" | "name" | "price" | "imageUrl"> {
@@ -68,11 +68,19 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
    };
 
    const decreaseProductQuantity = (productId: string) => {
-      setProducts((prev) => prev.map(p => p.quantity > 1 ? { ...p, quantity: p.quantity - 1 } : p));
+      setProducts((prev) =>
+         prev.map(p =>
+            p.id === productId && p.quantity > 1 ? { ...p, quantity: p.quantity - 1 } : p
+         )
+      );
    };
+
    const increaseProductQuantity = (productId: string) => {
-      setProducts((prev) => prev.map(p => ({ ...p, quantity: p.quantity + 1 })));
+      setProducts((prev) =>
+         prev.map(p => p.id === productId ? { ...p, quantity: p.quantity + 1 } : p)
+      );
    };
+
    const removeProduct = (productId: string) => {
       setProducts((prev) => prev.filter(p => p.id !== productId));
    };

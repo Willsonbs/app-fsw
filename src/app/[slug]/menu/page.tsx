@@ -2,8 +2,9 @@
 import { notFound } from "next/navigation";
 
 import { db } from "@/lib/prisma";
-import RestaurantHeader from "./components/header";
+
 import RestaurantCategories from "./components/categories";
+import RestaurantHeader from "./components/header";
 
 
 interface RestaurantMenuPageProps {

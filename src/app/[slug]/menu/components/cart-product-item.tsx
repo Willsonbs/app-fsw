@@ -1,9 +1,11 @@
-import Image from "next/image";
-import { CartContext, CartProduct } from "../contexts/cart";
-import FormatCurrency from "@/helpers/format-currency";
-import { Button } from "@/components/ui/button";
 import { ChevronLeftIcon, ChevronRightIcon, TrashIcon } from "lucide-react";
+import Image from "next/image";
 import { useContext } from "react";
+
+import { Button } from "@/components/ui/button";
+import FormatCurrency from "@/helpers/format-currency";
+
+import { CartContext, CartProduct } from "../contexts/cart";
 
 
 interface CartItemProps {
@@ -21,7 +23,8 @@ const CartProductItem = ({ product }: CartItemProps) => {
             </div>
             <div className="space-y-1">
                <p className="max-w-[90%] truncade text-ellipsis text-xs">{product.name}</p>
-               <p className="text-sm font-semibold">{FormatCurrency(product.price)}</p>
+               <p className="text-sm font-semibold">
+                  {FormatCurrency(product.price)}</p>
                {/* Quantidade*/}
                <div className="flex items-center gap-1">
                   <Button

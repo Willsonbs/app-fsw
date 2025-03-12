@@ -1,13 +1,17 @@
 "use client"
 
-import { Button } from '@/components/ui/button';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Prisma } from '@prisma/client';
-import { ChefHatIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
-import Image from 'next/image';
-import { useContext, useState } from 'react';
-import { CartContext } from '../../contexts/cart';
-import CartSheet from '../../components/cart-sheet';
+import { Prisma } from "@prisma/client";
+import { ChefHatIcon, ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import Image from "next/image";
+import { useContext, useState } from "react";
+
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import FormatCurrency from '@/helpers/format-currency';
+
+import CartSheet from "../../components/cart-sheet";
+import { CartContext } from "../../contexts/cart";
+
 
 
 
@@ -66,10 +70,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
                {/* Price and quantity */}
                <div className="mt-3 flex items-center justify-between">
                   <h3 className="text-base font-semibold">
-                     {new Intl.NumberFormat("pt-BR", {
-                        style: "currency",
-                        currency: "BRL",
-                     }).format(product.price)}
+                     {FormatCurrency(product.price)}
                   </h3>
                   <div className="flex items-center gap-3 text-center">
                      <Button

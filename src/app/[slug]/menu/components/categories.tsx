@@ -1,16 +1,18 @@
 
 "use client"
 
-import { Button } from "@/components/ui/button";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import FormatCurrency from "@/helpers/format-currency";
 import { Prisma } from "@prisma/client";
 import { ClockIcon } from "lucide-react";
 import Image from "next/image";
 import { useContext, useState } from "react";
+
+import { Button } from "@/components/ui/button";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import FormatCurrency from "@/helpers/format-currency";
+
 import { CartContext } from "../contexts/cart";
-import Products from "./products";
 import CartSheet from "./cart-sheet";
+import Products from "./products";
 
 interface RestaurantCategoriesProps {
    restaurant: Prisma.RestaurantGetPayload<{

@@ -1,10 +1,8 @@
+import { db } from "@/lib/prisma";
+
 import { isValidCpf, removeCpfPontuation } from "../menu/helpers/validate-cpf";
 import CpfForm from "./components/cpf-form";
-import { db } from "@/lib/prisma";
 import OrderList from "./components/order-list";
-
-
-
 
 interface OrdersPageProps {
    searchParams: Promise<{ cpf: string }>;

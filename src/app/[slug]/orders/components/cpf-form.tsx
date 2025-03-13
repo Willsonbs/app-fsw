@@ -42,7 +42,6 @@ type FormSchema = z.infer<typeof formSchema>;
 const CpfForm = () => {
    const form = useForm<FormSchema>({
       resolver: zodResolver(formSchema),
-
    });
 
    const router = useRouter()
@@ -50,7 +49,7 @@ const CpfForm = () => {
    const pathname = usePathname();
 
    const onSubmit = (data: FormSchema) => {
-      router.push(`${pathname}?cpf=${removeCpfPontuation(data.cpf)}`)
+      router.replace(`${pathname}?cpf=${removeCpfPontuation(data.cpf)}`)
    };
 
    const handleCancel = () => {
@@ -59,7 +58,7 @@ const CpfForm = () => {
 
    return (
       <Drawer open>
-         <DrawerTrigger>Open</DrawerTrigger>
+         <DrawerTrigger></DrawerTrigger>
          <DrawerContent>
             <DrawerHeader>
                <DrawerTitle>Visualizar pedido</DrawerTitle>

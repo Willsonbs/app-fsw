@@ -1,5 +1,5 @@
 
-import Image from "next/image";
+import Image from "next/image"
 import { notFound } from "next/navigation";
 
 import { db } from "@/lib/prisma";

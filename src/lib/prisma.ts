@@ -16,5 +16,6 @@ if (process.env.NODE_ENV === "production") {
 }
 
 export const db = prisma;
+export { prisma };
 
 // esse código garante que sempre haja uma conexão aberta com o banco de dados.

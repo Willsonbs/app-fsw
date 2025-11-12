@@ -1,13 +1,12 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import { ConsumptionMethod } from "@prisma/client";
 import { Loader2Icon } from "lucide-react";
-import { useParams, useSearchParams } from 'next/navigation';
-import { useContext, useState, useTransition } from "react";
+import { useSearchParams } from 'next/navigation';
+import { useContext, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { PatternFormat } from "react-number-format";
-import { toast } from "sonner";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -29,10 +28,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-import { createOrder } from "../actions/create-orders";
 import { CartContext } from "../contexts/cart";
 import { isValidCpf } from "../helpers/validate-cpf";
-
+import { createStripeCheckout } from "../actions/create-stripe-checkout";
+import { loadStripe } from "@stripe/stripe-js";
 
 const formSchema = z.object({
    nome: z.string().trim().min(1, { message: "O nome é obrigatório!" }),
@@ -42,10 +41,9 @@ const formSchema = z.object({
 type FormSchema = z.infer<typeof formSchema>;
 
 const FinishOrderButton = () => {
-   const { slug } = useParams<{ slug: string }>();
    const { products } = useContext(CartContext);
    const searchParams = useSearchParams();
-   const [isPending, startTransition] = useTransition();
+   const [isPending, setIsPending] = useState(false);
    const form = useForm<FormSchema>({
       resolver: zodResolver(formSchema),
       mode: "onBlur",
@@ -59,24 +57,23 @@ const FinishOrderButton = () => {
 
    const onSubmit = async (data: FormSchema) => {
       try {
-         const consumptionMethod = searchParams.get("consumptionMethod") as ConsumptionMethod;
-         startTransition(async () => {
-            await createOrder({
-               consumptionMethod,
-               customerName: data.nome,
-               customerCpf: data.cpf,
-               products,
-               slug,
-            });
-            toast.success("Pedido finalizado com sucesso!");
+         setIsPending(true);
+         const consumptionMethod = searchParams.get(
+            "consumptionMethod"
+         ) as ConsumptionMethod;
+         const { sessionId } = await createStripeCheckout({ products });
 
-            form.reset();
-            setIsOpen(false);
+         if (!process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY) return;
+         const stripe = await loadStripe(
+            process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY
+         );
 
-         });
+         stripe?.redirectToCheckout({ sessionId: sessionId });
 
-      } catch {
-         toast.error("Erro ao finalizar pedido!");
+      } catch (error) {
+         console.error(error);
+      } finally {
+         setIsPending(false);
       }
    };
 
@@ -91,9 +88,8 @@ const FinishOrderButton = () => {
                <DrawerDescription>Insira suas informações abaixo para finalizar pedido</DrawerDescription>
             </DrawerHeader>
 
-
             <FormProvider {...form}>
-               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 p-5">
                   {/* Nome */}
                   <FormField
                      control={form.control}
